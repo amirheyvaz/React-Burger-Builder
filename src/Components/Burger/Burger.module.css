@@ -2,8 +2,12 @@
     margin: auto;
     font-weight: bold;
     width: 40%;
-    height: 250px;
+    height: 300px;
     text-align: center;
     font-size: 1.2rem;
     overflow: scroll;
+    padding-bottom: 50px;
 }
+.Burger::-webkit-scrollbar {
+    display: none;
+  }

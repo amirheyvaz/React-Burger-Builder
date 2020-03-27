@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row } from 'react-bootstrap';
 
 const BurgerIngeridientsSummary = (props) => {
 
+
+    
     const IngredientsList = Object.keys(props.Ingredients).map(i => (
 
-        <Row>
+        <Row  key={i}>
             <p>
                 {i + ' :    ' + props.Ingredients[i]}
             </p>
@@ -26,14 +28,17 @@ const BurgerIngeridientsSummary = (props) => {
                 </Container>
             </Row>
             <Row>
-                Check out NOW
+                <strong>
+                    Total Price : {'    ' + props.TotalPrice + '$'}
+                </strong>
             </Row>
         </Container>
     );
 }
 
 BurgerIngeridientsSummary.propTypes = {
-    Ingredients: PropTypes.object
+    Ingredients: PropTypes.object,
+    TotalPrice: PropTypes.number
 };
 
 export default BurgerIngeridientsSummary;

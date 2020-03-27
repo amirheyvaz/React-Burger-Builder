@@ -9,7 +9,7 @@ const BurgerControl = (props) => {
     return (
         <Container className={classes.Container}>
             <Row>
-                <Col md={6}>
+                <Col sm={6}>
                     {props.Label}
                 </Col>
                 <Col>

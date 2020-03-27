@@ -3,8 +3,9 @@ import './BurgerBuilder.css'
 import PropTypes from 'prop-types';
 import Burger from '../../Components/Burger/Burger';
 import BurgerControls from '../../Components/BurgerControls/BurgerControls';
-import { Row, Col , Container, Modal } from 'react-bootstrap';
+import { Row, Col , Container, Modal, Button, Navbar , Nav } from 'react-bootstrap';
 import BurgerIngeridientsSummary from '../../Components/BurgerIngeridientsSummary/BurgerIngeridientsSummary';
+
 
 const INGREDIENTS_PRICE = {
     salad: 0.8,
@@ -84,9 +85,9 @@ class BurgerBuilder extends Component {
         for(let [key , value] of Object.entries(DisabledInfo)){
             DisabledInfo[key] = (value <= 0);
         }
-        debugger;
         return (
             <React.Fragment>
+                
                 <Modal show={this.state.purchasing} onHide={this.modalCloseHandler}>
                     <Modal.Header closeButton>
                         <Modal.Title>
@@ -94,13 +95,21 @@ class BurgerBuilder extends Component {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <BurgerIngeridientsSummary Ingredients={this.state.Ingredients} />
+                        <BurgerIngeridientsSummary Ingredients={this.state.Ingredients} TotalPrice={this.state.TotalPrice} />
                     </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant='success' style={{width: '100px'}}>
+                            Check Out
+                        </Button>
+                    </Modal.Footer>
                 </Modal>
-                <Burger Ingredients={this.state.Ingredients}  />
-                <BurgerControls AddHandler={this.AddIngredientHandler} RemoveHandler={this.RemoveIngredientHandler}  DisabledInfo={DisabledInfo} 
-                    Price = {this.state.TotalPrice.toFixed(2)}  OrderClickHandler={this.OrderClickHandler} orderable={!this.state.orderable}
-                />
+                <div style={{marginTop : '20px',top: '60px',position:'relative'}}>
+                    <Burger Ingredients={this.state.Ingredients}  />
+                    <BurgerControls AddHandler={this.AddIngredientHandler} RemoveHandler={this.RemoveIngredientHandler}  DisabledInfo={DisabledInfo} 
+                        Price = {this.state.TotalPrice.toFixed(2)}  OrderClickHandler={this.OrderClickHandler} orderable={!this.state.orderable}
+                    />
+                </div>
+
             </React.Fragment>
         );
     }

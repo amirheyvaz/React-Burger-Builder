@@ -36,7 +36,7 @@ BurgerControls.propTypes = {
     AddHandler: PropTypes.func,
     RemoveHandler : PropTypes.func,
     DisabledInfo: PropTypes.object,
-    Price : PropTypes.number,
+    Price : PropTypes.string,
     OrderClickHandler : PropTypes.func,
     orderable: PropTypes.bool
 };
