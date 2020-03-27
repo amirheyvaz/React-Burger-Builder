@@ -13,10 +13,10 @@ const BurgerControl = (props) => {
                     {props.Label}
                 </Col>
                 <Col>
-                    <Button className={classes.Button} variant="outline-primary">Less</Button>
+                    <Button className={classes.Button} variant="outline-primary" onClick={props.RemoveHandler} disabled={props.DisabledInfo}>Less</Button>
                 </Col>
                 <Col>
-                    <Button className={classes.Button} variant="primary">More</Button>
+                    <Button className={classes.Button} variant="primary" onClick={props.AddHandler}>More</Button>
                 </Col>
                 
             </Row> 
@@ -25,7 +25,10 @@ const BurgerControl = (props) => {
 }
 
 BurgerControl.propTypes = {
-    Label: PropTypes.string
+    Label: PropTypes.string,
+    AddHandler: PropTypes.func,
+    RemoveHandler : PropTypes.func,
+    DisabledInfo: PropTypes.bool
 };
 
 export default BurgerControl;
