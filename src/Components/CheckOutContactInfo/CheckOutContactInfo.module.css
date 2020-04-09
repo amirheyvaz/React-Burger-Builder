@@ -1,0 +1,13 @@
+.Button{
+    margin:  auto;
+    width: 100px;
+}
+.ButtonCol{
+    align-items: center;    
+    text-align: center;
+    margin-bottom: 100px;
+}
+.Container{
+    width: 75%;
+}
+

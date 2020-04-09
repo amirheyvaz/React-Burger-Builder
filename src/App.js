@@ -4,6 +4,9 @@ import BurgerBuilder from './Containers/BurgerBuilder/BurgerBuilder';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col , Container, Modal, Button, Navbar , Nav } from 'react-bootstrap';
 import BurgerLogo from './Assets/Images/Burger-Logo.png';
+import {Switch , NavLink, Route } from 'react-router-dom';
+import Orders from './Components/Orders/Orders';
+import CheckOut from './Containers/CheckOut/CheckOut';
 
 function App() {
   return (
@@ -22,12 +25,24 @@ function App() {
                     <Navbar.Toggle />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                        <Nav.Link active href="/">Home</Nav.Link>
-                        <Nav.Link href="/">Check-Out</Nav.Link>
+                        
+                        <NavLink  to="/" exact activeClassName="nav-link active" className="nav-link">
+                          Home
+                        </NavLink>
+                        <NavLink to="/Orders" exact activeClassName="nav-link active" className="nav-link">
+                          Orders
+                        </NavLink>
+                        
                         </Nav>
                     </Navbar.Collapse>
         </Navbar>
-      <BurgerBuilder  />
+       
+      <Switch>
+        <Route path="/" exact component={BurgerBuilder} />
+        <Route path="/Orders" exact component={Orders} />
+        <Route path="/CheckOut" exact component={CheckOut} />
+
+      </Switch>  
     </div>
   );
 }

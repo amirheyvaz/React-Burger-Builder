@@ -1,0 +1,10 @@
+.Order{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px; 
+    background-color: #f7f7f7;
+    box-shadow: 6px 6px 10px #ccc;
+    width: 50% !important;
+}

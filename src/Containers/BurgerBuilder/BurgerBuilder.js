@@ -6,12 +6,14 @@ import { Row, Col , Container, Modal, Button, Navbar , Nav, Alert } from 'react-
 import BurgerIngeridientsSummary from '../../Components/BurgerIngeridientsSummary/BurgerIngeridientsSummary';
 import Axios from 'axios';
 import classes from './BurgerBuilder.module.css'
+import { withRouter } from 'react-router-dom';
 
 const INGREDIENTS_PRICE = {
     salad: 0.8,
     meat: 2,
     cheese: 1,
-    bacon: 1.3
+    bacon: 1.3,
+    default: 4
 };
 
 class BurgerBuilder extends Component {
@@ -19,7 +21,7 @@ class BurgerBuilder extends Component {
     constructor(props){
         super(props);
 
-        Axios.defaults.baseURL = "http://localhost:2874/api/burgerbuilder/";
+        Axios.defaults.baseURL = "http://localhost:8001/api/burgerbuilder/";
         
     }
     state = {
@@ -92,51 +94,71 @@ class BurgerBuilder extends Component {
 
     checkOutClickHandler = () => {
         this.setState({sedingRequest : true});
-        var obj = {
-            SaladAmount : this.state.Ingredients.salad,
-            CheeseAmount: this.state.Ingredients.cheese,
-            MeatAmount: this.state.Ingredients.meat,
-            BaconAmount : this.state.Ingredients.bacon
-        };
-        Axios.post("Order" , obj)
-        .then(Response => {
-            if(Response.data){
-                this.setState({
-                    alertMessage : 'Oder Sent Successfully',
-                    alertShow: true,
-                    alertVariant: 'success',
-                    sedingRequest : false,
-                    purchasing: false
-                });
-            }
-            else{
-                this.setState({
-                    alertMessage : 'Oder Sent but there was an error in processing it at the server',
-                    alertShow: true,
-                    alertVariant: 'warning',
-                    sedingRequest : false,
-                    purchasing: false
-                });
-            }
+        // var obj = {
+        //     SaladAmount : this.state.Ingredients.salad,
+        //     CheeseAmount: this.state.Ingredients.cheese,
+        //     MeatAmount: this.state.Ingredients.meat,
+        //     BaconAmount : this.state.Ingredients.bacon
+        // };
+        // Axios.post("Order" , obj)
+        // .then(Response => {
+        //     if(Response.data){
+        //         this.setState({
+        //             alertMessage : 'Oder Sent Successfully',
+        //             alertShow: true,
+        //             alertVariant: 'success',
+        //             sedingRequest : false,
+        //             purchasing: false
+        //         });
+        //     }
+        //     else{
+        //         this.setState({
+        //             alertMessage : 'Oder Sent but there was an error in processing it at the server',
+        //             alertShow: true,
+        //             alertVariant: 'warning',
+        //             sedingRequest : false,
+        //             purchasing: false
+        //         });
+        //     }
             
-        })
-        .catch(Error => {
-            this.setState({
-                alertMessage : 'Order didn\'t send to server successfully with error ' + Error,
-                alertShow: true,
-                alertVariant: 'danger',
-                sedingRequest : false,
-                purchasing: false
-            });
-        })
-        .then(() => {
-            this.setState({Ingredients: {
-                salad: 0,
-                meat:0,
-                cheese: 0,
-                bacon: 0
-            }});
+        // })
+        // .catch(Error => {
+        //     this.setState({
+        //         alertMessage : 'Order didn\'t send to server successfully with error ' + Error,
+        //         alertShow: true,
+        //         alertVariant: 'danger',
+        //         sedingRequest : false,
+        //         purchasing: false
+        //     });
+        // })
+        // .then(() => {
+        //     this.setState({Ingredients: {
+        //         salad: 0,
+        //         meat:0,
+        //         cheese: 0,
+        //         bacon: 0
+        //     }});
+        // });
+        
+        //Pushing Search Query:
+
+        const QueryParams = [];
+        for(let i in this.state.Ingredients){
+            QueryParams.push(encodeURIComponent(i) + '=' +encodeURIComponent(this.state.Ingredients[i]));
+        }
+        const queryString = QueryParams.join('&');
+        this.props.history.push({
+            pathname: "/CheckOut",
+            search: '?' + queryString
         });
+
+        this.setState({
+                    sedingRequest : false,
+                    purchasing: false
+        });
+
+
+
     }
 
     render(){
@@ -185,4 +207,5 @@ BurgerBuilder.propTypes = {
 
 };
 
-export default BurgerBuilder;
+export default withRouter(BurgerBuilder);
+export {INGREDIENTS_PRICE};
