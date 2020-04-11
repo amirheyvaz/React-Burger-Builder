@@ -1,7 +1,7 @@
 import classes from './Order.module.css';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {INGREDIENTS_PRICE} from '../../../Containers/BurgerBuilder/BurgerBuilder'
+import {INGREDIENTS_PRICE} from '../../../store/actions'
 import BurgerIngeridientsSummary from '../../BurgerIngeridientsSummary/BurgerIngeridientsSummary'
 
 const Order = (props) => {

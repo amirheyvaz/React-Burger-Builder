@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import BurgerControl from './BurgerControl/BurgerControl'
 import { Container, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-
+import {connect} from 'react-redux';
+import * as actions from '../../store/actions';
 
 const BurgerControls = (props) => {
 
@@ -18,13 +19,13 @@ const BurgerControls = (props) => {
     return (
         <div className={classes.BurgerControls}>
             <div className={classes.Price}>
-                Total Price : <strong>{' ' + props.Price + '$'}</strong>
+                Total Price : <strong>{' ' + props.TotalPrice.toFixed(2) + '$'}</strong>
             </div>
         <div>
                 {Controls}
         </div>
         <div className={classes.OrderNowContainer}>
-            <Button className={classes.Button}  variant="success" onClick={props.OrderClickHandler} disabled={props.orderable}>
+            <Button className={classes.Button}  variant="success" onClick={props.OrderClickHandler} disabled={!props.orderable}>
                 Oder NOW
             </Button>
         </div>
@@ -36,9 +37,15 @@ BurgerControls.propTypes = {
     AddHandler: PropTypes.func,
     RemoveHandler : PropTypes.func,
     DisabledInfo: PropTypes.object,
-    Price : PropTypes.string,
-    OrderClickHandler : PropTypes.func,
-    orderable: PropTypes.bool
+    OrderClickHandler : PropTypes.func
+
 };
 
-export default BurgerControls;
+const mapStateToProps = state =>{
+    return {
+        TotalPrice : state.TotalPrice,
+        orderable : state.orderable
+    };
+};
+
+export default connect(mapStateToProps,null)(BurgerControls);

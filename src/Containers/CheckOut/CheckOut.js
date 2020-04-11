@@ -8,6 +8,7 @@ import CheckOutContactInfo from '../../Components/CheckOutContactInfo/CheckOutCo
 import CheckOutShipment from '../../Components/CheckOutShipment/CheckOutShipment';
 import CheckOutFinish from '../../Components/CheckOutFinish/CheckOutFinish';
 
+
 const { Step } = Steps;
 
 
@@ -57,5 +58,9 @@ class CheckOut extends Component {
         );
     }
 }
+
+
+
+
 
 export default withRouter(CheckOut);

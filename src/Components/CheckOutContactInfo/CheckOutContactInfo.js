@@ -2,11 +2,10 @@ import classes from './CheckOutContactInfo.module.css';
 import React ,  { Component }from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
- 
-class CheckOutContactInfo extends Component{
-    state = {
+import {connect} from 'react-redux';
+import * as actions from '../../store/actions';
 
-    };
+class CheckOutContactInfo extends Component{
 
     render(){
         return (
@@ -73,4 +72,14 @@ CheckOutContactInfo.propTypes = {
     SubmitClick: PropTypes.func
 };
 
-export default CheckOutContactInfo;
+const mapStateToProps = state =>{
+    return {
+        ContactInfo : state.ContactInfo
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+    };
+};
+
+export default connect(mapStateToProps , null)(CheckOutContactInfo);

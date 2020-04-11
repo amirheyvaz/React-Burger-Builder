@@ -2,6 +2,8 @@ import classes from './CheckOutShipment.module.css';
 import React , {Component} from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
+import {connect} from 'react-redux';
+import * as actions from '../../store/actions';
 
 class CheckOutShipment extends Component{
 
@@ -63,5 +65,14 @@ CheckOutShipment.propTypes = {
     BackClick: PropTypes.func
 };
 
+const mapStateToProps = state =>{
+    return {
+        ShipmentInfo : state.ShipmentInfo
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+    };
+};
 
-export default CheckOutShipment;
+export default connect(mapStateToProps , null)(CheckOutShipment);
