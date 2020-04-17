@@ -35,6 +35,7 @@ class CheckOutShipment extends Component{
             PhoneNumber : this.state.PhoneNumber.value,
             Address : this.state.Address.value
         };
+
         this.props.Set_ShipmentInfo(ShipmentInfo);
         //
         this.props.SubmitClick();
@@ -124,7 +125,7 @@ class CheckOutShipment extends Component{
                         <Button variant="outline-danger" className={classes.Button} onClick={this.props.BackClick}>
                             Back
                         </Button>
-                        <Button variant="success" disabled={!this.state.SubmitIsEnabled} className={classes.Button} onClick={this.props.SubmitClick}>
+                        <Button variant="success" disabled={!this.state.SubmitIsEnabled} className={classes.Button} onClick={this.SubmitHandler}>
                             Order!
                         </Button>
                     </Col>
@@ -148,7 +149,7 @@ const mapStateToProps = state =>{
 };
 const mapDispatchToProps = dispatch => {
     return {
-        ShipmentInfo:(shipment) => dispatch({type : actions.SET_SHIPMENTINFO , shipmentInfo: shipment})
+        Set_ShipmentInfo : (shipment) => dispatch({type : actions.SET_SHIPMENTINFO , shipmentInfo: shipment})
     };
 };
 

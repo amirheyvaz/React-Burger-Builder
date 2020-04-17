@@ -18,7 +18,7 @@ class CheckOut extends Component {
     };
 
     componentDidMount(prevProps){
-        if (this.props.location !== prevProps.location) {
+        if (!prevProps) {
             window.scrollTo(0, 0)
           }
     }
