@@ -61,6 +61,22 @@ const reducer = (state = initialState , action) => {
             };
             break;
         }
+        case actions.SET_CONTACTINFO : {
+            const contactInfo = action.contactInfo;
+            return {
+                ...state,
+                ContactInfo : contactInfo
+            };
+            break;
+        }
+        case actions.SET_SHIPMENTINFO : {
+            const shipmentInfo = action.shipmentInfo;
+            return {
+                ...state,
+                ShipmentInfo : shipmentInfo
+            };
+            break;
+        }
         default : {
 
             return state;

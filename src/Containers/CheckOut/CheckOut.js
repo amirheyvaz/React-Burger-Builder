@@ -17,6 +17,12 @@ class CheckOut extends Component {
         current: 0
     };
 
+    componentDidMount(prevProps){
+        if (this.props.location !== prevProps.location) {
+            window.scrollTo(0, 0)
+          }
+    }
+
     ContactSumbitHandler = () => {
         const Cur = this.state.current;
         this.setState({

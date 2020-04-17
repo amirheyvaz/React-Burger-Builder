@@ -12,3 +12,9 @@
 .Container{
     width: 75%;
 }
+.Button[disabled]{
+    cursor: not-allowed;
+}
+.inValidInput{
+    border: 1px solid red !important;
+}

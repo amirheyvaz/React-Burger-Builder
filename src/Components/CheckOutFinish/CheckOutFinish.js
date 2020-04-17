@@ -28,7 +28,13 @@ class CheckOutFinish extends Component {
             SaladAmount : Ingredients.salad,
             CheeseAmount: Ingredients.cheese,
             MeatAmount: Ingredients.meat,
-            BaconAmount : Ingredients.bacon
+            BaconAmount : Ingredients.bacon,
+            FirstName: this.props.ContactInfo.FirstName,
+            LastName: this.props.ContactInfo.LastName,
+            EmailAddress: this.props.ContactInfo.EmailAddress,
+            Address: this.props.ShipmentInfo.Address,
+            PhoneNumber: this.props.ShipmentInfo.PhoneNumber
+
         };
         Axios.post("http://localhost:8001/api/burgerbuilder/Order" , obj)
         .then(Response => {
@@ -76,7 +82,9 @@ CheckOutFinish.propTypes = {
 
 const mapStateToProps = state =>{
     return {
-        Ingredients: state.Ingredients
+        Ingredients: state.Ingredients,
+        ContactInfo: state.ContactInfo,
+        ShipmentInfo: state.ShipmentInfo
     };
 };
 

@@ -7,6 +7,85 @@ import * as actions from '../../store/actions';
 
 class CheckOutContactInfo extends Component{
 
+    state = {
+        FirstName : {
+            value : "",
+            validation : {
+                isRequired : true
+            },
+            isValid : true,
+            UserTouched : false
+        },
+        LastName: {
+            value : "",
+            validation : {
+                isRequired : true
+            },
+            isValid : true,
+            UserTouched : false
+
+        },
+        EmailAddress: {
+            value : "",
+            validation : {
+                isRequired : true,
+                contains : "@"
+            },
+            isValid : true,
+            UserTouched : false
+
+        },
+        SubmitIsEnabled : false
+    };
+
+    SubmitHandler = (event) => {
+        event.preventDefault();
+        //
+        const ContactInfo = {
+            FirstName : this.state.FirstName.value,
+            LastName : this.state.LastName.value,
+            EmailAddress : this.state.EmailAddress.value
+        };
+        this.props.Set_ContactInfo(ContactInfo);
+        //
+        this.props.SubmitClick();
+    }
+
+    InputChangeHandler = (event ,id) => {
+        let enabled = true;
+        const newState = {};
+
+
+        for (let [key , value] of Object.entries(this.state)) {
+            if(key == "SubmitIsEnabled"){
+                continue;
+            }
+            if(key !== id){
+                enabled &= value.isValid && value.UserTouched;
+                continue;
+            }
+            const newValue = event.target.value;
+            let isValid = true;
+            //required
+            if(value.validation.isRequired && newValue.length === 0){
+                isValid = false;
+            }
+            if(value.validation.contains && newValue.indexOf(value.validation.contains) === -1){
+                isValid = false;
+            }
+            enabled &= isValid;
+            newState[key] = {
+                validation : value.validation,
+                value : newValue,
+                isValid : isValid,
+                UserTouched : true
+            };
+        }
+        newState["SubmitIsEnabled"] = enabled;
+        this.setState(newState);            
+
+    }
+
     render(){
         return (
             <Container className={classes.Container}>
@@ -22,6 +101,9 @@ class CheckOutContactInfo extends Component{
                                 placeholder="Enter Your First Name"
                                 aria-label="Enter Your First Name"
                                 aria-describedby="txtFirstName"
+                                value = {this.state.FirstName.value}
+                                onChange={(event) => this.InputChangeHandler(event ,"FirstName")}
+                                className={this.state.FirstName.isValid ? null : classes.inValidInput}
                             />
                     </InputGroup>
                     </Col>
@@ -36,6 +118,9 @@ class CheckOutContactInfo extends Component{
                                 placeholder="Enter Your Last Name"
                                 aria-label="Enter Your Last Name"
                                 aria-describedby="txtLastName"
+                                value = {this.state.LastName.value}
+                                onChange={(event) => this.InputChangeHandler(event,"LastName")}
+                                className={this.state.LastName.isValid ? null : classes.inValidInput}
                             />
                         </InputGroup>
                     </Col>
@@ -52,13 +137,16 @@ class CheckOutContactInfo extends Component{
                                     placeholder="Enter Your Email Address"
                                     aria-label="Enter Your Email Address"
                                     aria-describedby="txtEmail"
+                                    value = {this.state.EmailAddress.value}
+                                    onChange={(event) => this.InputChangeHandler(event,"EmailAddress")}
+                                    className={this.state.EmailAddress.isValid ? null : classes.inValidInput}
                                 />
                         </InputGroup>
                     </Col>
                 </Row>
                 <Row>
                     <Col xs={12} className={classes.ButtonCol}>
-                        <Button variant="primary" className={classes.Button} onClick={this.props.SubmitClick}>
+                        <Button variant="primary" disabled={!this.state.SubmitIsEnabled} className={classes.Button} onClick={this.SubmitHandler}>
                             Submit
                         </Button>
                     </Col>
@@ -79,7 +167,8 @@ const mapStateToProps = state =>{
 };
 const mapDispatchToProps = dispatch => {
     return {
+        Set_ContactInfo : (contact) => dispatch({type : actions.SET_CONTACTINFO , contactInfo: contact})
     };
 };
 
-export default connect(mapStateToProps , null)(CheckOutContactInfo);
+export default connect(mapStateToProps , mapDispatchToProps)(CheckOutContactInfo);
