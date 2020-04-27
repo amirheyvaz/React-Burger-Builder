@@ -14,11 +14,29 @@ const initialState = {
     TotalPrice : 4,
     orderable : false,
     ContactInfo: null,
-    ShipmentInfo: null
+    ShipmentInfo: null,
+    OrderCompeleted: false,
+    alertShow : false,
+    ErrorMassage : "There are no orders!",
+    OrdersList: []
 };
 
 const reducer = (state = initialState , action) => {
     switch(action.type){
+        case (actions.SETALLORDERS) : {
+            return {
+                ...state,
+                OrdersList : action.orders
+            };
+            break;
+        }
+        case (actions.SETERRORMESSAGE) : {
+            return {
+                ...state,
+                ErrorMassage : action.message
+            };
+            break;
+        }
         case (actions.ADD_INGREDIENT) : {
             const oldCount = state.Ingredients[action.IngredientType];
             const newCount = oldCount + 1;
@@ -74,6 +92,21 @@ const reducer = (state = initialState , action) => {
             return {
                 ...state,
                 ShipmentInfo : shipmentInfo
+            };
+            break;
+        }
+        case actions.SUBMITORDERSUCCESS : {
+            return {
+                ...state,
+                OrderCompeleted : action.OrderCompeleted,
+                alertShow : !action.OrderCompeleted
+            };
+            break;
+        }
+        case actions.SETORDERALERT : {
+            return {
+                ...state,
+                alertShow : action.alert
             };
             break;
         }

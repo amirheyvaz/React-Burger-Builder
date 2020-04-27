@@ -4,16 +4,11 @@ import { Container, Row, Col, InputGroup, FormControl, Button , Spinner , Alert}
 import classes from './CheckOutFinish.module.css';
 import Burger from '../Burger/Burger';
 import {withRouter} from 'react-router-dom';
-import Axios from 'axios';
+
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions';
 
 class CheckOutFinish extends Component {
-    state = {
-        //Ingredients : {},
-        OrderCompeleted: false,
-        alertShow : false
-    };
 
     
 
@@ -34,41 +29,21 @@ class CheckOutFinish extends Component {
             EmailAddress: this.props.ContactInfo.EmailAddress,
             Address: this.props.ShipmentInfo.Address,
             PhoneNumber: this.props.ShipmentInfo.PhoneNumber
-
-        };
-        Axios.post("http://localhost:8001/api/burgerbuilder/Order" , obj)
-        .then(Response => {
-            if(Response.data){
-                this.setState({
-                    OrderCompeleted : true
-                });
-            }
-            else{
-                this.setState({
-                    OrderCompeleted : false,
-                    alertShow : true
-                });
-            }
             
-        })
-        .catch(Error => {
-            this.setState({
-                OrderCompeleted : false,
-                 alertShow : true
-            });
-        });
+        };
+        this.props.submitOrder(obj);
     }
 
     render(){
         return (
             <React.Fragment>
                 <div className={classes.Message} >
-                    {this.state.OrderCompeleted ? <div className={classes.MessageDiv}>Enjoy your Burger!</div> : <Spinner animation="grow" variant="primary" />}
+                    {this.props.OrderCompeleted ? <div className={classes.MessageDiv}>Enjoy your Burger!</div> : <Spinner animation="grow" variant="primary" />}
                 </div>
                 <div className={classes.Burger}>
                         <Burger Ingredients={this.props.Ingredients} />
                 </div>
-                <Alert className={classes.Alert} variant="danger" show={this.state.alertShow} dismissible onClose={() => {this.setState({alertShow: false});}} >
+                <Alert className={classes.Alert} variant="danger" show={this.props.alertShow} dismissible onClose={() => {this.props.SetOrderAlert(false);}} >
                     There was a problem with ordering. Please come back later...
                 </Alert>
             </React.Fragment>
@@ -84,12 +59,16 @@ const mapStateToProps = state =>{
     return {
         Ingredients: state.Ingredients,
         ContactInfo: state.ContactInfo,
-        ShipmentInfo: state.ShipmentInfo
+        ShipmentInfo: state.ShipmentInfo,
+        OrderCompeleted: state.OrderCompeleted,
+        alertShow : state.alertShow
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        submitOrder: (order) =>  dispatch(actions.SubmitOrder(order)),
+        SetOrderAlert : (al) => dispatch(actions.SetOrderAlert(al))
     };
 };
 

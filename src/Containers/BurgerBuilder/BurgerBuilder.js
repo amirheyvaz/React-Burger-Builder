@@ -1,10 +1,9 @@
 import React , {Component} from 'react';
-import PropTypes from 'prop-types';
 import Burger from '../../Components/Burger/Burger';
 import BurgerControls from '../../Components/BurgerControls/BurgerControls';
-import { Row, Col , Container, Modal, Button, Navbar , Nav, Alert } from 'react-bootstrap';
+import {  Modal, Button, Alert } from 'react-bootstrap';
 import BurgerIngeridientsSummary from '../../Components/BurgerIngeridientsSummary/BurgerIngeridientsSummary';
-import Axios from 'axios';
+
 import classes from './BurgerBuilder.module.css'
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -14,12 +13,7 @@ import * as actions from '../../store/actions';
 
 class BurgerBuilder extends Component {
 
-    constructor(props){
-        super(props);
 
-        Axios.defaults.baseURL = "http://localhost:8001/api/burgerbuilder/";
-        
-    }
     state = {
         // Ingredients: {
         //     salad: 0,
